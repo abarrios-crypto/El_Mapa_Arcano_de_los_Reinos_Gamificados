@@ -250,25 +250,22 @@
             // --- Data for the new game with 3 difficulties ---
             const allQuestData = {
                 basico: [
-                    { category: 'Santuario 1: Pergaminos Vivientes', scenario: 'Como Guía, debes crear un material de lectura interactivo. ¿Qué estrategia usarías para mantener el interés y evaluar la comprensión?', choices: [{ text: 'Agregar "sellos" y "gemas" interactivas (preguntas H5P) en puntos clave del texto.', correct: true }, { text: 'Solo dar el texto y preguntar al final en una discusión.', correct: false }], feedback_correct: '¡Correcto! Integrar interacciones directamente en el texto mantiene el ritmo y refuerza la comprensión. ¡Ganas 150 cristales!', feedback_incorrect: 'Aunque discutir es valioso, la interacción directa con el contenido es más efectiva para mantener la atención.', points: 150 },
-                    { category: 'Santuario 2: Visiones del Oráculo', scenario: 'Un video de 7 minutos es parte de tu contenido. ¿Cómo lo haces más efectivo para tus estudiantes?', choices: [{ text: 'Agregar pausas interactivas para reflexión o acertijos.', correct: true }, { text: 'Dejarlo como está, para que lo vean completo de una vez.', correct: false }], feedback_correct: '¡Exacto! Las pausas interactivas combaten la fatiga y promueven la reflexión profunda. ¡Ganas 150 cristales!', feedback_incorrect: 'Un video largo puede ser pasivo. Las pausas lo convierten en una experiencia activa.', points: 150 },
-                    { type: 'matching', category: 'Prueba Final Básica', scenario: 'Has explorado los fundamentos. Conecta las herramientas con su propósito como Guía Gamificador.', points: 200, matches: [ { gamified: 'Pergaminos Vivientes', real: 'H5P (Lectura Interactiva)' }, { gamified: 'Visiones del Oráculo', real: 'Video Interactivo con Feedback' }, { gamified: 'Cristales de Interacción', real: 'Sistema de Recompensas' } ] }
+                    { category: 'Mapa Arcaico: Santuarios', scenario: '¿Cuál es el propósito principal de los "Santuarios" en el Mapa Arcaico?', choices: [{ text: 'Ofrecer módulos temáticos con actividades específicas y gamificadas.', correct: true }, { text: 'Solo ser puntos de control para avanzar.', correct: false }, { text: 'Servir como decoración del mapa.', correct: false }], feedback_correct: '¡Correcto! Los Santuarios son centros temáticos clave del aprendizaje. ¡Ganas 150 cristales!', feedback_incorrect: 'Los Santuarios son mucho más que simples checkpoints; son el corazón de la experiencia.', points: 150 },
+                    { category: 'Santuario 1: Pergaminos Vivientes', scenario: '¿Qué característica es esencial para que un "Pergamino Viviente" sea efectivo?', choices: [{ text: 'Contener preguntas interactivas integradas (como H5P).', correct: true }, { text: 'Ser un documento PDF largo.', correct: false }, { text: 'Incluir únicamente texto.', correct: false }], feedback_correct: '¡Perfecto! La interacción directa con el texto es clave. ¡Ganas 150 cristales!', feedback_incorrect: 'La información pasiva no es tan efectiva como la activa.', points: 150 },
+                    { type: 'matching', category: 'Prueba Final Básica', scenario: 'Conecta las herramientas del Mapa con su función principal.', points: 200, matches: [ { gamified: 'Pergaminos Vivientes', real: 'H5P (Lectura Interactiva)' }, { gamified: 'Visiones del Oráculo', real: 'Video Interactivo con Feedback' }, { gamified: 'Cristales de Interacción', real: 'Sistema de Recompensas' } ] }
                 ],
                 intermedio: [
-                    { category: 'Mapa Arcaico: Santuarios', scenario: 'Como Guía, ¿cuál es el propósito principal de los "Santuarios" en el Mapa Arcaico?', choices: [{ text: 'Ofrecer módulos temáticos con actividades específicas y gamificadas.', correct: true }, { text: 'Solo ser puntos de control para avanzar.', correct: false }], feedback_correct: '¡Correcto! Los Santuarios son centros temáticos clave del aprendizaje. ¡Ganas 175 cristales!', feedback_incorrect: 'Los Santuarios son mucho más que simples checkpoints; son el corazón de la experiencia.', points: 175 },
-                    { category: 'Santuario 1: Pergaminos Vivientes', scenario: 'Presentas un "Pergamino Viviente". ¿Qué característica es esencial para que sea efectivo como herramienta de guía?', choices: [{ text: 'Contener preguntas interactivas integradas (como H5P) que fomenten la lectura activa.', correct: true }, { text: 'Ser un documento estático con mucha información.', correct: false }], feedback_correct: '¡Perfecto! La interacción directa con el texto es clave. ¡Ganas 175 cristales!', feedback_incorrect: 'La información pasiva no es tan efectiva como la activa.', points: 175 },
-                    { category: 'Santuario 2: Visiones del Oráculo', scenario: 'Un video en "Visiones del Oráculo" debe ser...', choices: [{ text: 'Interactivo, con pausas para reflexión o mini-desafíos.', correct: true }, { text: 'Largo y detallado, sin interrupciones para no perder fluidez.', correct: false }], feedback_correct: '¡Exacto! La interrupción intencionada mejora la retención. ¡Ganas 175 cristales!', feedback_incorrect: 'Los videos largos sin pausa pueden ser difíciles de seguir.', points: 175 },
-                    { category: 'Prueba Ancestral: Metodologías Activas', scenario: 'Un grupo de estudiantes debe diseñar y construir un puente para cruzar un cañón. ¿Qué sabiduría antigua están aplicando al resolver un problema real de forma colaborativa?', choices: [{ text: 'La Senda del Aprendizaje Basado en Proyectos.', correct: true }, { text: 'El Pergamino de la Repetición.', correct: false }], feedback_correct: '¡Correcto! El Aprendizaje Basado en Proyectos une a las leyendas para resolver grandes desafíos. ¡Ganas 200 cristales!', feedback_incorrect: 'La repetición no construye puentes. La acción y colaboración sí.', points: 200 },
-                    { category: 'Prueba Ancestral: Metodologías Activas', scenario: 'El Sabio te entrega un pergamino para que lo estudies antes de vuestro encuentro. Durante la lección, os dedicáis a resolver acertijos complejos. ¿Qué método de enseñanza es este?', choices: [{ text: 'El Aula Invertida de los Sabios.', correct: true }, { text: 'La Lección Magistral.', correct: false }], feedback_correct: '¡Exacto! El conocimiento previo permite que el tiempo juntos sea para las pruebas más difíciles. ¡Ganas 200 cristales!', feedback_incorrect: 'Una lección magistral es escuchar. La leyenda debe actuar.', points: 200 },
-                    { type: 'matching', category: 'Prueba Final Intermedia', scenario: 'El conocimiento ancestral se une a la guía. Conecta los conceptos.', points: 250, matches: [ { gamified: 'Simulacros del Destino', real: 'Caso Interactivo (Elije tu Aventura)' }, { gamified: 'Misión del Puente', real: 'Aprendizaje Basado en Proyectos' }, { gamified: 'Pergamino del Sabio', real: 'Aula Invertida' } ] }
+                    { category: 'Santuario 2: Visiones del Oráculo', scenario: '¿Qué debe incluir un video en "Visiones del Oráculo" para ser efectivo?', choices: [{ text: 'Pausas interactivas para reflexión.', correct: true }, { text: 'Solo narración sin interrupciones.', correct: false }, { text: Música de fondo muy alta.', correct: false }], feedback_correct: '¡Exacto! La interrupción intencionada mejora la retención. ¡Ganas 175 cristales!', feedback_incorrect: 'Los videos largos sin pausa pueden ser difíciles de seguir.', points: 175 },
+                    { category: 'Mapa Arcaico: Simulacros del Destino', scenario: '¿Qué es un "Simulacro del Destino"?', choices: [{ text: 'Un caso interactivo donde las decisiones afectan el desenlace.', correct: true }, { text: 'Un examen final tradicional.', correct: false }, { text: 'Un juego de azar.', correct: false }], feedback_correct: '¡Correcto! Ofrece autonomía y consecuencias, aumentando la inmersión. ¡Ganas 175 cristales!', feedback_incorrect: 'Los simulacros son dinámicos y centrados en la toma de decisiones.', points: 175 },
+                    { category: 'Santuario 1: Pergaminos Vivientes', scenario: '¿Cuál es el objetivo de los "sellos" y "gemas" en un Pergamino Viviente?', choices: [{ text: 'Evaluar la comprensión mientras se lee.', correct: true }, { text: 'Hacerlo más largo.', correct: false }, { text: 'Cambiar el color del texto.', correct: false }], feedback_correct: '¡Perfecto! Son herramientas de evaluación formativa. ¡Ganas 175 cristales!', feedback_incorrect: 'La idea es mejorar la comprensión, no solo extender el texto.', points: 175 },
+                    { type: 'matching', category: 'Prueba Final Intermedia', scenario: 'Conecta las actividades del Mapa con su metodología base.', points: 250, matches: [ { gamified: 'Simulacros del Destino', real: 'Caso Interactivo (Elije tu Aventura)' }, { gamified: 'Misión del Puente', real: 'Aprendizaje Basado en Proyectos' }, { gamified: 'Pergamino del Sabio', real: 'Aula Invertida' } ] }
                 ],
                 avanzado: [
-                    { category: 'Elemento: Reliquias (Insignias)', scenario: 'Tras superar las pruebas de un templo, ¿cómo reconoces visualmente esta gran hazaña?', choices: [{ text: 'Con una reliquia sagrada, como el "Ojo de la Verdad".', correct: true }, { text: 'Con más cristales, igual que al vencer enemigos menores.', correct: false }], feedback_correct: '¡Perfecto! Las reliquias son ideales para marcar hazañas memorables y coleccionables. ¡Ganas 250 cristales!', feedback_incorrect: 'Aunque los cristales son buenas, una reliquia otorga un estatus de leyenda.', points: 250 },
-                    { category: 'Elemento: Retroalimentación (Feedback)', scenario: 'Al fallar un acertijo, un espíritu te susurra: "La sombra se proyecta opuesta a la luz". ¿Qué elemento crucial del aprendizaje se está manifestando?', choices: [{ text: 'Retroalimentación inmediata y constructiva.', correct: true }, { text: 'Un castigo por el error.', correct: false }], feedback_correct: '¡Tu percepción es aguda! La retroalimentación es un regalo que nos guía, no un castigo. ¡Ganas 250 cristales!', feedback_incorrect: 'Un error no es un final, sino una oportunidad para aprender. La guía es clave.', points: 250 },
-                    { category: 'Mapa Arcaico: Simulacros del Destino', scenario: 'Un "Simulacro del Destino" en el Mapa Arcaico...', choices: [{ text: 'Presenta un caso interactivo donde las decisiones del estudiante afectan el desenlace.', correct: true }, { text: 'Es un examen final tradicional.', correct: false }], feedback_correct: '¡Correcto! Ofrece autonomía y consecuencias, aumentando la inmersión. ¡Ganas 275 cristales!', feedback_incorrect: 'Los simulacros son dinámicos y centrados en la toma de decisiones.', points: 275 },
-                    { category: 'Elemento: Agencia', scenario: 'Se te presenta la opción de seguir la misión principal o explorar una cueva misteriosa en busca de un tesoro opcional. ¿Qué principio de la gamificación se respeta al darte esta libertad?', choices: [{ text: 'La libertad de elección y autonomía.', correct: true }, { text: 'La linealidad forzada de la historia.', correct: false }], feedback_correct: '¡Correcto! Permitir que la leyenda tome sus propias decisiones (agencia) aumenta inmensamente la inmersión y el compromiso. ¡Ganas 250 cristales!', feedback_incorrect: 'Un camino único es una orden. Una elección es una aventura.', points: 250 },
-                    { category: 'Mapa Arcaico: El Tesoro del Guía', scenario: 'Al finalizar la exploración del Mapa, ¿cuál es el propósito del "Tesoro del Guía"?', choices: [{ text: 'Revelar las reliquias obtenidas y ofrecer retroalimentación sobre el rol como Guía.', correct: true }, { text: 'Solo entregar un premio simbólico.', correct: false }], feedback_correct: '¡Genial! Es el cierre que conecta logros con el crecimiento personal del Guía. ¡Ganas 300 cristales!', feedback_incorrect: 'El Tesoro es más que un premio; es la culminación narrativa y formativa.', points: 300 },
-                    { type: 'matching', category: 'Prueba Final Avanzada', scenario: 'Has llegado al final. Demuestra tu dominio total conectando todos los elementos de la guía.', points: 350, matches: [ { gamified: 'Reliquias', real: 'Insignias y Logros' }, { gamified: 'La Batalla Final', real: 'Endgame (Evaluación Sumativa)' }, { gamified: 'Cueva Opcional', real: 'Autonomía y Elección' }, { gamified: 'Mapa del Mundo', real: 'Progreso Visible' }, { gamified: 'Susurro del Espíritu', real: 'Retroalimentación Constructiva' } ] }
+                    { category: 'Elemento: Reliquias (Insignias)', scenario: '¿Cómo se otorgan las "Reliquias" en el Mapa Arcaico?', choices: [{ text: 'Al completar con éxito un Santuario.', correct: true }, { text: 'Con más cristales.', correct: false }, { text: 'Automáticamente al inicio.', correct: false }], feedback_correct: '¡Perfecto! Las reliquias marcan hazañas memorables. ¡Ganas 250 cristales!', feedback_incorrect: 'Aunque los cristales son buenas, una reliquia otorga un estatus de leyenda.', points: 250 },
+                    { category: 'Elemento: Retroalimentación (Feedback)', scenario: '¿Qué tipo de retroalimentación se da en el Mapa?', choices: [{ text: 'Inmediata y constructiva.', correct: true }, { text: 'Solo al finalizar todo.', correct: false }, { text: 'Punitiva.', correct: false }], feedback_correct: '¡Tu percepción es aguda! La retroalimentación es un regalo. ¡Ganas 250 cristales!', feedback_incorrect: 'Un error no es un final, sino una oportunidad para aprender. La guía es clave.', points: 250 },
+                    { category: 'Mapa Arcaico: El Tesoro del Guía', scenario: '¿Cuál es el propósito del "Tesoro del Guía"?', choices: [{ text: 'Revelar las reliquias y retroalimentar el rol del Guía.', correct: true }, { text: 'Solo entregar un premio simbólico.', correct: false }, { text: 'Bloquear el acceso a otros niveles.', correct: false }], feedback_correct: '¡Genial! Es el cierre que conecta logros con el crecimiento del Guía. ¡Ganas 275 cristales!', feedback_incorrect: 'El Tesoro es más que un premio; es la culminación narrativa y formativa.', points: 275 },
+                    { category: 'Elemento: Agencia', scenario: '¿Qué permite la "Agencia" en el Mapa?', choices: [{ text: 'Libertad de elección y autonomía.', correct: true }, { text: 'Solo seguir instrucciones.', correct: false }, { text: 'No interactuar.', correct: false }], feedback_correct: '¡Correcto! Aumenta inmensamente la inmersión y el compromiso. ¡Ganas 250 cristales!', feedback_incorrect: 'Un camino único es una orden. Una elección es una aventura.', points: 250 },
+                    { type: 'matching', category: 'Prueba Final Avanzada', scenario: 'Conecta los conceptos del Mapa con su propósito educativo.', points: 350, matches: [ { gamified: 'Reliquias', real: 'Insignias y Logros' }, { gamified: 'Cueva Opcional', real: 'Autonomía y Elección' }, { gamified: 'Mapa del Mundo', real: 'Progreso Visible' }, { gamified: 'Susurro del Espíritu', real: 'Retroalimentación Constructiva' } ] }
                 ]
             };
             const relics = { 
@@ -276,7 +273,6 @@
                 intermedio: { name: 'Reliquia del Estratega Visual', icon: '🎬' },
                 avanzado: { name: 'Reliquia del Tomador de Decisiones', icon: '⚔️' },
             };
-            // --- Nuevos avatares ---
             const avatars = {
                 'Iluminador': '💡', 'Artesano': '🔧', 'Narrador': '📖', 'Facilitador': '🤝', 
                 'Oráculo': '🔮', 'Constructor': '🏗️', 'Ancestro': '🦉', 'Guía': '🧭',
@@ -287,7 +283,7 @@
             let playerState = {
                 name: 'Guía',
                 avatar: '🧭',
-                completedDifficulties: new Set() // Cambiado de completedSantuarios a completedDifficulties
+                completedDifficulties: new Set()
             };
             // Try to load previous state to maintain continuity
             const savedState = localStorage.getItem('legendGamePlayerState');
@@ -387,7 +383,9 @@
             }
             function loadChoiceStep(step) {
                 choicesContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
-                step.choices.forEach(choice => {
+                // Mezcla las opciones antes de mostrarlas
+                const shuffledChoices = shuffle([...step.choices]);
+                shuffledChoices.forEach(choice => {
                     const button = document.createElement('button');
                     button.innerHTML = `<span>${choice.text}</span>`;
                     button.className = 'choice-btn w-full text-left p-4 rounded-lg';
@@ -577,23 +575,20 @@
                 const explanationContainer = document.getElementById('explanation-container');
                 downloadBtn.textContent = "Generando...";
                 downloadBtn.disabled = true;
-                // Prepare a clone for high-quality capture, independent of screen size
                 const certClone = certWrapper.cloneNode(true);
                 const explanationClone = explanationContainer.cloneNode(true);
-                // Create an off-screen container for rendering the clones
                 const printContainer = document.createElement('div');
                 printContainer.style.position = 'absolute';
                 printContainer.style.left = '-9999px';
                 printContainer.style.top = '0';
-                printContainer.style.width = '800px'; // Fixed width for consistent rendering
+                printContainer.style.width = '800px';
                 printContainer.appendChild(certClone);
                 printContainer.appendChild(explanationClone);
                 document.body.appendChild(printContainer);
-                // Remove animations from the clones
                 certClone.querySelector('#certificate').classList.remove('animate__animated', 'animate__zoomIn');
                 const options = { 
-                    backgroundColor: "#1a1a2e", // Match the dark background
-                    scale: 2, // Higher scale for better quality
+                    backgroundColor: "#1a1a2e",
+                    scale: 2,
                     useCORS: true,
                 };
                 html2canvas(certClone, options).then(canvas1 => {
@@ -607,9 +602,8 @@
                         });
                         const pdfWidth = pdf.internal.pageSize.getWidth();
                         const pdfHeight = pdf.internal.pageSize.getHeight();
-                        // --- Page 1: Certificate ---
                         const canvas1AR = canvas1.width / canvas1.height;
-                        let img1Width = pdfWidth - 40; // with margin
+                        let img1Width = pdfWidth - 40;
                         let img1Height = img1Width / canvas1AR;
                         if (img1Height > pdfHeight - 40) {
                             img1Height = pdfHeight - 40;
@@ -618,10 +612,9 @@
                         const x1 = (pdfWidth - img1Width) / 2;
                         const y1 = (pdfHeight - img1Height) / 2;
                         pdf.addImage(imgData1, 'PNG', x1, y1, img1Width, img1Height);
-                        // --- Page 2: Explanation ---
                         pdf.addPage('letter', 'portrait');
                         const canvas2AR = canvas2.width / canvas2.height;
-                        let img2Width = pdfWidth - 40; // with margin
+                        let img2Width = pdfWidth - 40;
                         let img2Height = img2Width / canvas2AR;
                          if (img2Height > pdfHeight - 40) {
                             img2Height = pdfHeight - 40;
@@ -631,7 +624,6 @@
                         const y2 = (pdfHeight - img2Height) / 2;
                         pdf.addImage(imgData2, 'PNG', x2, y2, img2Width, img2Height);
                         pdf.save(`Certificado_Guia_${playerState.name.replace(/\s/g, '_')}.pdf`);
-                        // Cleanup
                         document.body.removeChild(printContainer);
                         downloadBtn.textContent = "Descargar PDF";
                         downloadBtn.disabled = false;
