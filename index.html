@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana del Diplomado: El Mapa Arcano de los Reinos Gamificados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Corregido: Hash de integridad para html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kLmbG0CzdlJen4v/QVigA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Corregido: Hash de integridad para jspdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-m4h0YhH4Nbhw2UzKMoDNNsI9zu6dmt3G0Qn3HlB9Ujoxqsa2/NwSRcXN8yy6dQVqQzYVq8tcR14yIGjDxQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Corregido: Hash de integridad para Tone.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js" integrity="sha512-5tT7Uk92cU8fL3W3a3qw3fBc8Y38YgI9o6YiE5YqNzVzRzHZgQ6vYq4Xq+8n4v41JnNPzZoqfCd5BcRc5ngg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        :root {
+            --cursor-sword: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 50 50" transform="rotate(45)"><path fill="silver" stroke="black" d="M23 0 L27 0 L27 30 L40 30 L40 35 L27 35 L27 50 L23 50 L23 35 L10 35 L10 30 L23 30 Z"/></svg>'), auto;
+            --cursor-fairy: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><radialGradient id="a"><stop offset="0%25" stop-color="white"/><stop offset="100%25" stop-color="cyan"/></radialGradient></defs><circle cx="16" cy="16" r="12" fill="cyan" fill-opacity="0.3"/><circle cx="16" cy="16" r="8" fill="url(%23a)" stroke="black" stroke-width="1"/></svg>'), auto;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #2C3E50; /* Fondo oscuro para arcano */
+            background-image: url('image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            cursor: var(--cursor-fairy);
+        }
+        .zelda-font {
+            font-family: 'Cinzel', serif;
+        }
+        .zelda-container {
+            background-color: #1a1a2e; /* Fondo oscuro para el contenedor */
+            border: 4px solid #4a4a8a; /* Borde arcano */
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+        }
+        .zelda-btn {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            background-color: #8e44ad; /* Morado arcano */
+            color: white;
+            border-radius: 8px;
+            border-bottom: 4px solid #6c3483;
+            transition: all 0.1s ease-in-out;
+            cursor: var(--cursor-sword);
+        }
+        .zelda-btn:hover {
+            transform: translateY(-2px);
+            border-bottom-width: 6px;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 220, 0.7));
+        }
+        .zelda-btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+        .zelda-btn:disabled {
+            background-color: #a38b57;
+            border-bottom-color: #6b4c3c;
+            cursor: not-allowed;
+            transform: translateY(0);
+        }
+        .zelda-btn.intermediate { background-color: #2a5a7e; border-bottom-color: #1a3a4d; }
+        .zelda-btn.advanced { background-color: #7e2a2a; border-bottom-color: #4d1a1a; }
+        .choice-btn {
+            background-color: #1a1a2e;
+            border: 2px solid #8e44ad; /* Borde morado */
+            transition: all 0.2s ease-in-out;
+            color: #d6c5e4; /* Texto claro */
+            cursor: var(--cursor-sword);
+        }
+        .choice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(142, 68, 173, 0.5);
+            border-color: #D4AF37; /* Gold */
+            background-color: #2c2c54;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.7));
+        }
+        .progress-bar-bg { background-color: #4A2E2C; }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #8e44ad, #9b59b6);
+            transition: width 0.5s ease-in-out;
+        }
+        .badge { transition: transform 0.3s ease, filter 0.3s ease; }
+        .feedback-correct { background-color: #27ae60; border-left: 4px solid #2ecc71; }
+        .feedback-incorrect { background-color: #c0392b; border-left: 4px solid #e74c3c; }
+        .hidden { display: none; }
+        .zelda-input {
+            background-color: #1a1a2e; border: 2px solid #8e44ad; color: #d6c5e4; border-radius: 6px;
+        }
+        .zelda-input:focus { outline: none; border-color: #D4AF37; box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4); }
+        .draggable-item { cursor: grab; background-color: #2c2c54; border: 2px solid #8e44ad; color: #d6c5e4; }
+        .draggable-item:hover { cursor: var(--cursor-sword); }
+        .drop-zone { background-color: #1a1a2e; border: 2px dashed #8e44ad; min-height: 50px; }
+        .drop-zone.drag-over { background-color: #2c2c54; }
+        .drop-zone.correct { background-color: #27ae60; border-style: solid; border-color: #2ecc71; }
+        .avatar-option {
+            border: 4px solid transparent;
+            transition: all 0.2s ease-in-out;
+            cursor: var(--cursor-sword);
+        }
+        .avatar-option.selected {
+            border-color: #D4AF37;
+            transform: scale(1.1);
+        }
+        .avatar-display {
+            width: 48px;
+            height: 48px;
+            background-color: #1a1a2e;
+            border: 2px solid #8e44ad;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+        @keyframes score-jump {
+          0% { transform: scale(1); color: #E2B029; text-shadow: none; }
+          50% { transform: scale(1.4); color: #fff; text-shadow: 0 0 10px #fff; }
+          100% { transform: scale(1); color: #E2B029; text-shadow: none; }
+        }
+        .score-animated {
+          animation: score-jump 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-[#d6c5e4]">
+    <div id="game-container" class="w-full max-w-4xl mx-auto p-4 sm:p-6 min-h-screen flex flex-col justify-center">
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center">
+            <h1 class="zelda-font text-4xl sm:text-5xl font-bold text-[#D4AF37]">El Mapa Arcano de los Reinos Gamificados</h1>
+            <p class="text-lg mt-4 max-w-2xl mx-auto">¡Saludos, <span id="prev-player-name">Guía</span>! Tu dominio es legendario, pero ahora el reto es mayor. Debes forjar tu <strong class="text-[#8c5a2b]">rol como Guía</strong>. Tu misión: explorar los <strong>Santuarios del Conocimiento</strong>.</p>
+            <div class="zelda-container p-6 mt-6">
+                <div id="name-input-section">
+                    <h2 class="zelda-font text-xl font-semibold text-[#D4AF37]">La Llama Activa del Guía</h2>
+                    <p class="mt-2">Has demostrado tu dominio. Ahora, como Guía, tu labor es iluminar el camino de otros. ¿Aceptas la misión de explorar los santuarios?</p>
+                    <input id="player-name" type="text" placeholder="Confirma tu nombre de Guía" class="zelda-input w-full max-w-xs mt-6 p-2 text-center text-lg">
+                    <button id="next-to-avatar-btn" class="zelda-btn mt-8 px-8 py-3 text-xl">Comenzar Exploración</button>
+                </div>
+                <div id="avatar-selection-section" class="hidden">
+                    <h2 class="zelda-font text-xl font-semibold text-[#D4AF37]">Elige tu Presencia de Guía</h2>
+                    <p class="mt-2">Como Guía, tu esencia debe resonar. ¿Qué arquetipo te define?</p>
+                    <div id="avatar-options" class="mt-6 flex justify-center items-center gap-2 flex-wrap">
+                        <!-- Avatars will be injected by JS -->
+                    </div>
+                    <button id="next-to-difficulty-btn" class="zelda-btn mt-8 px-8 py-3 text-xl">Siguiente</button>
+                </div>
+                <div id="difficulty-selection-section" class="hidden">
+                    <h2 class="zelda-font text-xl font-semibold text-[#D4AF37]">Elige tu Sendero</h2>
+                    <p class="mt-2">Cada sendero que completes te otorgará una reliquia única. Las reliquias son acumulables en tu leyenda, ¡intenta conseguirlas todas! Eres libre de forjar tu propio camino. ¿Qué desafío aceptas?</p>
+                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button class="zelda-btn p-4 text-lg" data-difficulty="basico">
+                            Modo Básico
+                            <span class="block text-xs font-normal mt-1">El inicio de la guía.</span>
+                        </button>
+                        <button class="zelda-btn intermediate p-4 text-lg" data-difficulty="intermedio">
+                            Modo Intermedio
+                             <span class="block text-xs font-normal mt-1">Nuevas pruebas te esperan.</span>
+                        </button>
+                        <button class="zelda-btn advanced p-4 text-lg" data-difficulty="avanzado">
+                            Modo Avanzado
+                             <span class="block text-xs font-normal mt-1">El desafío definitivo.</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Game Screen -->
+        <div id="main-game" class="hidden">
+            <header class="zelda-container p-4 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div id="avatar-header-display" class="avatar-display"></div>
+                    <h2 class="zelda-font text-lg font-bold text-[#D4AF37]" id="player-display">Guía</h2>
+                </div>
+                <div class="w-full sm:w-1/2">
+                    <h2 class="text-sm font-semibold text-slate-500 mb-1 text-center">SABIDURÍA</h2>
+                    <div class="w-full progress-bar-bg rounded-full h-5 p-1"><div id="progress-bar" class="progress-bar-fill h-full rounded-full" style="width: 0%;"></div></div>
+                </div>
+                <div class="text-center"><h2 class="text-sm font-semibold text-slate-500">CRISTALES</h2><p id="score" class="text-2xl font-bold text-[#E2B029]">0</p></div>
+            </header>
+            <div id="scenario-container" class="zelda-container p-6">
+                <p id="scenario-category" class="zelda-font text-sm font-bold uppercase text-[#8e44ad] mb-2"></p>
+                <p id="scenario-text" class="text-lg mb-6"></p>
+                <div id="choices-container" class="gap-4"></div>
+            </div>
+            <div id="feedback-container" class="mt-4 p-4 rounded-lg text-center hidden">
+                <p id="feedback-text"></p>
+                <button id="next-btn" class="zelda-btn mt-4 px-6 py-2">Siguiente Santuario</button>
+            </div>
+            <footer class="mt-6">
+                <h3 class="zelda-font text-center text-lg font-semibold text-[#D4AF37] mb-3">RELICUARIOS DEL GUIA (Santuarios Completados)</h3>
+                <div id="badges-container" class="flex justify-center flex-wrap gap-4 zelda-container p-4 min-h-[50px]"></div>
+            </footer>
+        </div>
+        <!-- End Screen -->
+        <div id="end-screen" class="text-center hidden">
+            <div id="end-screen-content" class="zelda-container p-8 animate__animated animate__zoomIn">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+        <!-- Certificate Screen -->
+        <div id="certificate-screen" class="hidden">
+            <div id="certificate-wrapper" class="w-full">
+                <div id="certificate" class="zelda-container p-8 animate__animated animate__zoomIn text-center">
+                     <h1 class="zelda-font text-3xl sm:text-4xl font-bold text-[#D4AF37]">Certificado de Guía Gamificado</h1>
+                     <p class="mt-4 text-lg">Se otorga este certificado a</p>
+                     <div class="flex justify-center items-center gap-4 my-4">
+                        <div id="cert-avatar-display" class="avatar-display"></div>
+                        <p id="cert-player-name" class="zelda-font text-4xl text-[#8c5a2b]"></p>
+                     </div>
+                     <p class="mt-2 text-lg">Por completar con éxito "El Mapa Arcano", demostrando habilidades para guiar y gamificar entornos de aprendizaje.</p>
+                     <div class="my-6">
+                         <p class="font-bold text-xl">Cristales de Interacción Recaudados: <span id="cert-score" class="text-[#E2B029]"></span></p>
+                     </div>
+                     <h2 class="zelda-font text-xl font-semibold text-[#D4AF37] mb-3">Reliquias del Guía</h2>
+                     <div id="cert-badges" class="flex justify-center flex-wrap gap-4 p-4"></div>
+                     <p class="text-xs text-slate-400 mt-6">Folio de Guía: <span id="cert-folio"></span></p>
+                     <div class="footer-text text-center text-xs text-slate-500 mt-4 pt-4 border-t-2 border-dashed border-[#8e44ad]">
+                        © 2025 | Adriana A. Barrios Rodríguez | Diplomado en Gamificación en Entornos Digitales para la Docencia Universitaria |  UAS | SAU |  DGES | Todos los derechos reservados.
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center no-print">
+                <button id="download-btn" class="zelda-btn px-6 py-3">Descargar PDF</button>
+                <button id="restart-from-cert-btn" class="zelda-btn px-6 py-3 bg-gray-600 border-b-gray-800">Nueva Exploración</button>
+            </div>
+        </div>
+    </div>
+    <!-- Explanation Page for PDF - Positioned off-screen -->
+    <div id="explanation-container" class="absolute left-[-9999px] top-0 w-[800px]">
+        <div id="explanation-page" class="zelda-container p-8 text-left text-sm">
+            <h1 class="zelda-font text-3xl font-bold text-[#D4AF37] text-center">Resumen del Mapa Arcano</h1>
+            <p class="text-center text-lg mt-2 mb-6">Reflexiones sobre la experiencia de "El Mapa Arcano de los Reinos Gamificados".</p>
+            <p class="text-justify mb-4">Este viaje fue una transición del rol de "Aprendiz" al de "Guía". Se exploraron herramientas y estrategias específicas para integrar la gamificación en entornos educativos reales.</p>
+            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">1. Modo Básico: Fundamentos de la Guía</h2>
+            <p class="mt-1 text-justify">Este nivel introduce los conceptos esenciales para guiar. Se exploran estrategias como la lectura interactiva y la importancia de la retroalimentación inmediata.</p>
+            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">2. Modo Intermedio: Profundizando en las Técnicas</h2>
+            <p class="mt-1 text-justify">Aquí se abordan metodologías activas como el Aprendizaje Basado en Proyectos y el Aula Invertida, y cómo integrarlas con elementos gamificados para potenciar su impacto.</p>
+            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">3. Modo Avanzado: El Maestro Guía</h2>
+            <p class="mt-1 text-justify">El nivel final desafía al Guía a considerar la motivación intrínseca, la autonomía del estudiante y la creación de un entorno de aprendizaje profundamente inmersivo y gamificado.</p>
+            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">4. El Rol del Guía</h2>
+            <p class="mt-1 text-justify">El enfoque central de esta experiencia fue empoderar a los participantes como Guías Gamificadores. Esto implica no solo conocer los elementos, sino saber cómo y cuándo aplicarlos para motivar, guiar y facilitar el aprendizaje de otros.</p>
+            <div class="footer-text text-center text-xs text-slate-500 mt-6 pt-3 border-t-2 border-dashed border-[#8e44ad]">
+                © 2025 | Adriana A. Barrios Rodríguez | Diplomado en Gamificación en Entornos Digitales para la Docencia Universitaria |  UAS | SAU |  DGES | Todos los derechos reservados.
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Data for the new game with 3 difficulties ---
+            const allQuestData = {
+                basico: [
+                    { category: 'Santuario 1: Pergaminos Vivientes', scenario: 'Como Guía, debes crear un material de lectura interactivo. ¿Qué estrategia usarías para mantener el interés y evaluar la comprensión?', choices: [{ text: 'Agregar "sellos" y "gemas" interactivas (preguntas H5P) en puntos clave del texto.', correct: true }, { text: 'Solo dar el texto y preguntar al final en una discusión.', correct: false }], feedback_correct: '¡Correcto! Integrar interacciones directamente en el texto mantiene el ritmo y refuerza la comprensión. ¡Ganas 150 cristales!', feedback_incorrect: 'Aunque discutir es valioso, la interacción directa con el contenido es más efectiva para mantener la atención.', points: 150 },
+                    { category: 'Santuario 2: Visiones del Oráculo', scenario: 'Un video de 7 minutos es parte de tu contenido. ¿Cómo lo haces más efectivo para tus estudiantes?', choices: [{ text: 'Agregar pausas interactivas para reflexión o acertijos.', correct: true }, { text: 'Dejarlo como está, para que lo vean completo de una vez.', correct: false }], feedback_correct: '¡Exacto! Las pausas interactivas combaten la fatiga y promueven la reflexión profunda. ¡Ganas 150 cristales!', feedback_incorrect: 'Un video largo puede ser pasivo. Las pausas lo convierten en una experiencia activa.', points: 150 },
+                    { type: 'matching', category: 'Prueba Final Básica', scenario: 'Has explorado los fundamentos. Conecta las herramientas con su propósito como Guía Gamificador.', points: 200, matches: [ { gamified: 'Pergaminos Vivientes', real: 'H5P (Lectura Interactiva)' }, { gamified: 'Visiones del Oráculo', real: 'Video Interactivo con Feedback' }, { gamified: 'Cristales de Interacción', real: 'Sistema de Recompensas' } ] }
+                ],
+                intermedio: [
+                    { category: 'Mapa Arcaico: Santuarios', scenario: 'Como Guía, ¿cuál es el propósito principal de los "Santuarios" en el Mapa Arcaico?', choices: [{ text: 'Ofrecer módulos temáticos con actividades específicas y gamificadas.', correct: true }, { text: 'Solo ser puntos de control para avanzar.', correct: false }], feedback_correct: '¡Correcto! Los Santuarios son centros temáticos clave del aprendizaje. ¡Ganas 175 cristales!', feedback_incorrect: 'Los Santuarios son mucho más que simples checkpoints; son el corazón de la experiencia.', points: 175 },
+                    { category: 'Santuario 1: Pergaminos Vivientes', scenario: 'Presentas un "Pergamino Viviente". ¿Qué característica es esencial para que sea efectivo como herramienta de guía?', choices: [{ text: 'Contener preguntas interactivas integradas (como H5P) que fomenten la lectura activa.', correct: true }, { text: 'Ser un documento estático con mucha información.', correct: false }], feedback_correct: '¡Perfecto! La interacción directa con el texto es clave. ¡Ganas 175 cristales!', feedback_incorrect: 'La información pasiva no es tan efectiva como la activa.', points: 175 },
+                    { category: 'Santuario 2: Visiones del Oráculo', scenario: 'Un video en "Visiones del Oráculo" debe ser...', choices: [{ text: 'Interactivo, con pausas para reflexión o mini-desafíos.', correct: true }, { text: 'Largo y detallado, sin interrupciones para no perder fluidez.', correct: false }], feedback_correct: '¡Exacto! La interrupción intencionada mejora la retención. ¡Ganas 175 cristales!', feedback_incorrect: 'Los videos largos sin pausa pueden ser difíciles de seguir.', points: 175 },
+                    { category: 'Prueba Ancestral: Metodologías Activas', scenario: 'Un grupo de estudiantes debe diseñar y construir un puente para cruzar un cañón. ¿Qué sabiduría antigua están aplicando al resolver un problema real de forma colaborativa?', choices: [{ text: 'La Senda del Aprendizaje Basado en Proyectos.', correct: true }, { text: 'El Pergamino de la Repetición.', correct: false }], feedback_correct: '¡Correcto! El Aprendizaje Basado en Proyectos une a las leyendas para resolver grandes desafíos. ¡Ganas 200 cristales!', feedback_incorrect: 'La repetición no construye puentes. La acción y colaboración sí.', points: 200 },
+                    { category: 'Prueba Ancestral: Metodologías Activas', scenario: 'El Sabio te entrega un pergamino para que lo estudies antes de vuestro encuentro. Durante la lección, os dedicáis a resolver acertijos complejos. ¿Qué método de enseñanza es este?', choices: [{ text: 'El Aula Invertida de los Sabios.', correct: true }, { text: 'La Lección Magistral.', correct: false }], feedback_correct: '¡Exacto! El conocimiento previo permite que el tiempo juntos sea para las pruebas más difíciles. ¡Ganas 200 cristales!', feedback_incorrect: 'Una lección magistral es escuchar. La leyenda debe actuar.', points: 200 },
+                    { type: 'matching', category: 'Prueba Final Intermedia', scenario: 'El conocimiento ancestral se une a la guía. Conecta los conceptos.', points: 250, matches: [ { gamified: 'Simulacros del Destino', real: 'Caso Interactivo (Elije tu Aventura)' }, { gamified: 'Misión del Puente', real: 'Aprendizaje Basado en Proyectos' }, { gamified: 'Pergamino del Sabio', real: 'Aula Invertida' } ] }
+                ],
+                avanzado: [
+                    { category: 'Elemento: Reliquias (Insignias)', scenario: 'Tras superar las pruebas de un templo, ¿cómo reconoces visualmente esta gran hazaña?', choices: [{ text: 'Con una reliquia sagrada, como el "Ojo de la Verdad".', correct: true }, { text: 'Con más cristales, igual que al vencer enemigos menores.', correct: false }], feedback_correct: '¡Perfecto! Las reliquias son ideales para marcar hazañas memorables y coleccionables. ¡Ganas 250 cristales!', feedback_incorrect: 'Aunque los cristales son buenas, una reliquia otorga un estatus de leyenda.', points: 250 },
+                    { category: 'Elemento: Retroalimentación (Feedback)', scenario: 'Al fallar un acertijo, un espíritu te susurra: "La sombra se proyecta opuesta a la luz". ¿Qué elemento crucial del aprendizaje se está manifestando?', choices: [{ text: 'Retroalimentación inmediata y constructiva.', correct: true }, { text: 'Un castigo por el error.', correct: false }], feedback_correct: '¡Tu percepción es aguda! La retroalimentación es un regalo que nos guía, no un castigo. ¡Ganas 250 cristales!', feedback_incorrect: 'Un error no es un final, sino una oportunidad para aprender. La guía es clave.', points: 250 },
+                    { category: 'Mapa Arcaico: Simulacros del Destino', scenario: 'Un "Simulacro del Destino" en el Mapa Arcaico...', choices: [{ text: 'Presenta un caso interactivo donde las decisiones del estudiante afectan el desenlace.', correct: true }, { text: 'Es un examen final tradicional.', correct: false }], feedback_correct: '¡Correcto! Ofrece autonomía y consecuencias, aumentando la inmersión. ¡Ganas 275 cristales!', feedback_incorrect: 'Los simulacros son dinámicos y centrados en la toma de decisiones.', points: 275 },
+                    { category: 'Elemento: Agencia', scenario: 'Se te presenta la opción de seguir la misión principal o explorar una cueva misteriosa en busca de un tesoro opcional. ¿Qué principio de la gamificación se respeta al darte esta libertad?', choices: [{ text: 'La libertad de elección y autonomía.', correct: true }, { text: 'La linealidad forzada de la historia.', correct: false }], feedback_correct: '¡Correcto! Permitir que la leyenda tome sus propias decisiones (agencia) aumenta inmensamente la inmersión y el compromiso. ¡Ganas 250 cristales!', feedback_incorrect: 'Un camino único es una orden. Una elección es una aventura.', points: 250 },
+                    { category: 'Mapa Arcaico: El Tesoro del Guía', scenario: 'Al finalizar la exploración del Mapa, ¿cuál es el propósito del "Tesoro del Guía"?', choices: [{ text: 'Revelar las reliquias obtenidas y ofrecer retroalimentación sobre el rol como Guía.', correct: true }, { text: 'Solo entregar un premio simbólico.', correct: false }], feedback_correct: '¡Genial! Es el cierre que conecta logros con el crecimiento personal del Guía. ¡Ganas 300 cristales!', feedback_incorrect: 'El Tesoro es más que un premio; es la culminación narrativa y formativa.', points: 300 },
+                    { type: 'matching', category: 'Prueba Final Avanzada', scenario: 'Has llegado al final. Demuestra tu dominio total conectando todos los elementos de la guía.', points: 350, matches: [ { gamified: 'Reliquias', real: 'Insignias y Logros' }, { gamified: 'La Batalla Final', real: 'Endgame (Evaluación Sumativa)' }, { gamified: 'Cueva Opcional', real: 'Autonomía y Elección' }, { gamified: 'Mapa del Mundo', real: 'Progreso Visible' }, { gamified: 'Susurro del Espíritu', real: 'Retroalimentación Constructiva' } ] }
+                ]
+            };
+            const relics = { 
+                basico: { name: 'Reliquia del Lector Crítico', icon: '📜' },
+                intermedio: { name: 'Reliquia del Estratega Visual', icon: '🎬' },
+                avanzado: { name: 'Reliquia del Tomador de Decisiones', icon: '⚔️' },
+            };
+            // --- Nuevos avatares ---
+            const avatars = {
+                'Iluminador': '💡', 'Artesano': '🔧', 'Narrador': '📖', 'Facilitador': '🤝', 
+                'Oráculo': '🔮', 'Constructor': '🏗️', 'Ancestro': '🦉', 'Guía': '🧭',
+                'Explorador': '🗺️', 'Guardián': '🛡️', 'Alquimista': '⚗️', 'Arquitecto': '🏛️',
+                'Embajador': '🌐', 'Cronista': '📜', 'Guardabosques': '🌲', 'Vidente': '👁️'
+            };
+            // --- Persistent State Object (inherits from previous game if available) ---
+            let playerState = {
+                name: 'Guía',
+                avatar: '🧭',
+                completedDifficulties: new Set() // Cambiado de completedSantuarios a completedDifficulties
+            };
+            // Try to load previous state to maintain continuity
+            const savedState = localStorage.getItem('legendGamePlayerState');
+            if (savedState) {
+                try {
+                    const parsed = JSON.parse(savedState);
+                    playerState.name = parsed.name;
+                    document.getElementById('prev-player-name').textContent = parsed.name;
+                } catch (e) {
+                    console.warn("No se pudo cargar el estado previo del jugador.");
+                }
+            }
+
+            // --- Game Variables (reset every playthrough) ---
+            let currentQuest = [];
+            let currentStep = 0;
+            let score = 0;
+            let selectedDifficulty = '';
+            const startScreen = document.getElementById('start-screen'), mainGame = document.getElementById('main-game'), endScreen = document.getElementById('end-screen'), certificateScreen = document.getElementById('certificate-screen');
+            const nameInputSection = document.getElementById('name-input-section'), avatarSelectionSection = document.getElementById('avatar-selection-section'), difficultySelectionSection = document.getElementById('difficulty-selection-section');
+            const nextToAvatarBtn = document.getElementById('next-to-avatar-btn'), nextToDifficultyBtn = document.getElementById('next-to-difficulty-btn');
+            const avatarOptionsContainer = document.getElementById('avatar-options');
+            const difficultyButtons = document.querySelectorAll('[data-difficulty]');
+            const nextBtn = document.getElementById('next-btn'), downloadBtn = document.getElementById('download-btn'), restartFromCertBtn = document.getElementById('restart-from-cert-btn');
+            const playerNameInput = document.getElementById('player-name'), playerDisplay = document.getElementById('player-display'), certPlayerName = document.getElementById('cert-player-name');
+            const avatarHeaderDisplay = document.getElementById('avatar-header-display'), certAvatarDisplay = document.getElementById('cert-avatar-display');
+            const progressBar = document.getElementById('progress-bar'), scoreDisplay = document.getElementById('score'), certScore = document.getElementById('cert-score');
+            const scenarioCategory = document.getElementById('scenario-category'), scenarioText = document.getElementById('scenario-text'), choicesContainer = document.getElementById('choices-container'), feedbackContainer = document.getElementById('feedback-container'), feedbackText = document.getElementById('feedback-text'), badgesContainer = document.getElementById('badges-container'), certBadges = document.getElementById('cert-badges');
+            const certFolio = document.getElementById('cert-folio');
+            const endScreenContent = document.getElementById('end-screen-content');
+            const soundManager = {
+                isReady: false,
+                synth: null,
+                init() {
+                    document.body.addEventListener('click', async () => {
+                        if (this.isReady || Tone.context.state === 'running') return;
+                        await Tone.start();
+                        this.synth = new Tone.Synth().toDestination();
+                        this.isReady = true;
+                    }, { once: true });
+                },
+                playClick() { if (this.isReady) this.synth.triggerAttackRelease("C4", "8n", Tone.now()); },
+                playRupee() { if (this.isReady) this.synth.triggerAttackRelease("G5", "16n", Tone.now()); },
+                playError() { if (this.isReady) this.synth.triggerAttackRelease("C3", "8n", Tone.now()); },
+                playSecret() {
+                    if (!this.isReady) return;
+                    const now = Tone.now();
+                    this.synth.triggerAttackRelease("G4", "8n", now + 0.01);
+                    this.synth.triggerAttackRelease("A4", "8n", now + 0.2);
+                    this.synth.triggerAttackRelease("B4", "8n", now + 0.4);
+                    this.synth.triggerAttackRelease("C5", "4n", now + 0.6);
+                }
+            };
+            function init() {
+                soundManager.init();
+                // Populate avatars
+                Object.entries(avatars).forEach(([name, icon]) => {
+                    const avatarEl = document.createElement('div');
+                    avatarEl.className = 'avatar-option p-1 rounded-full';
+                    avatarEl.innerHTML = `<div class="w-16 h-16 text-4xl flex items-center justify-center bg-[#1a1a2e] rounded-full" title="${name}">${icon}</div>`;
+                    avatarEl.dataset.avatar = icon;
+                    avatarEl.addEventListener('click', () => selectAvatar(avatarEl, icon));
+                    avatarOptionsContainer.appendChild(avatarEl);
+                });
+                // Select first avatar by default
+                if (avatarOptionsContainer.firstElementChild) {
+                    selectAvatar(avatarOptionsContainer.firstElementChild, avatarOptionsContainer.firstElementChild.dataset.avatar);
+                }
+            }
+            function selectAvatar(selectedElement, avatarIcon) {
+                soundManager.playClick();
+                playerState.avatar = avatarIcon;
+                document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected'));
+                selectedElement.classList.add('selected');
+            }
+            function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
+            function setupGame(difficulty) {
+                soundManager.playClick();
+                // Reset per-game variables
+                selectedDifficulty = difficulty;
+                currentQuest = allQuestData[difficulty] ? [...allQuestData[difficulty]] : [];
+                currentStep = 0;
+                score = 0;
+                startScreen.classList.add('hidden'); mainGame.classList.remove('hidden');
+                mainGame.classList.add('animate__animated', 'animate__fadeIn');
+                loadStep(currentStep);
+                updateUI();
+                renderSessionRelics();
+            }
+            function loadStep(stepIndex) {
+                feedbackContainer.classList.add('hidden');
+                const step = currentQuest[stepIndex];
+                scenarioCategory.textContent = step.category;
+                scenarioText.textContent = step.scenario;
+                choicesContainer.innerHTML = '';
+                if (step.type === 'matching') loadMatchingStep(step); else loadChoiceStep(step);
+            }
+            function loadChoiceStep(step) {
+                choicesContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+                step.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.innerHTML = `<span>${choice.text}</span>`;
+                    button.className = 'choice-btn w-full text-left p-4 rounded-lg';
+                    button.onclick = () => {
+                        handleChoice(choice.correct, step);
+                    };
+                    choicesContainer.appendChild(button);
+                });
+            }
+            function handleChoice(isCorrect, step) {
+                choicesContainer.querySelectorAll('button, .draggable-item').forEach(el => {
+                    if (el.tagName === 'BUTTON') el.disabled = true;
+                    else if(el.draggable) el.draggable = false;
+                });
+                let feedback = '';
+                if (isCorrect) {
+                    soundManager.playRupee();
+                    score += step.points;
+                    const scoreDisplayEl = document.getElementById('score');
+                    scoreDisplayEl.classList.add('score-animated');
+                    setTimeout(() => scoreDisplayEl.classList.remove('score-animated'), 500);
+                    feedback = `${step.feedback_correct || '¡Correcto!'}`;
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg feedback-correct animate__animated animate__fadeInUp';
+                } else {
+                    soundManager.playError();
+                    feedback = `${step.feedback_incorrect || 'Respuesta incorrecta.'}`;
+                    feedbackContainer.className = 'mt-4 p-4 rounded-lg feedback-incorrect animate__animated animate__shakeX';
+                }
+                feedbackText.textContent = feedback;
+                feedbackContainer.classList.remove('hidden');
+                updateUI();
+            }
+            function loadMatchingStep(step) {
+                choicesContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-6 mt-4';
+                const gamifiedTerms = shuffle([...step.matches]);
+                const realTerms = shuffle([...step.matches]);
+                let correctMatches = 0;
+                const gamifiedCol = document.createElement('div');
+                gamifiedCol.innerHTML = `<h3 class="zelda-font text-center text-lg font-semibold text-[#D4AF37] mb-3">Herramientas del Guía</h3>`;
+                const realCol = document.createElement('div');
+                realCol.innerHTML = `<h3 class="zelda-font text-center text-lg font-semibold text-[#D4AF37] mb-3">Propósito Educacional</h3>`;
+                gamifiedTerms.forEach(term => {
+                    const el = document.createElement('div');
+                    el.id = term.gamified.replace(/\s/g, ''); el.textContent = term.gamified;
+                    el.className = 'draggable-item p-3 rounded-lg text-center'; el.draggable = true; el.dataset.match = term.real;
+                    el.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', e.target.id));
+                    gamifiedCol.appendChild(el);
+                });
+                realTerms.forEach(term => {
+                    const el = document.createElement('div');
+                    el.className = 'drop-zone p-3 rounded-lg flex items-center justify-center'; el.dataset.match = term.real; el.innerHTML = `<span class="pointer-events-none">${term.real}</span>`;
+                    el.addEventListener('dragover', e => { e.preventDefault(); e.target.classList.add('drag-over'); });
+                    el.addEventListener('dragleave', e => e.target.classList.remove('drag-over'));
+                    el.addEventListener('drop', e => {
+                        e.preventDefault(); e.target.classList.remove('drag-over');
+                        const droppedId = e.dataTransfer.getData('text/plain'); const draggableEl = document.getElementById(droppedId);
+                        if (draggableEl && draggableEl.dataset.match === e.target.dataset.match) {
+                            soundManager.playRupee();
+                            e.target.innerHTML = ''; e.target.appendChild(draggableEl);
+                            e.target.classList.add('correct'); draggableEl.draggable = false; draggableEl.style.cursor = 'default';
+                            correctMatches++;
+                            if (correctMatches === step.matches.length) {
+                                score += step.points;
+                                feedbackContainer.className = 'mt-4 p-4 rounded-lg feedback-correct animate__animated animate__fadeInUp';
+                                feedbackText.textContent = '¡Tu sabiduría como Guía es inigualable! Has comprendido la esencia de las herramientas. ¡Ganas ' + step.points + ' cristales!';
+                                feedbackContainer.classList.remove('hidden');
+                                updateUI();
+                            }
+                        }
+                    });
+                    realCol.appendChild(el);
+                });
+                choicesContainer.appendChild(gamifiedCol); choicesContainer.appendChild(realCol);
+            }
+            function nextStep() {
+                soundManager.playClick();
+                currentStep++;
+                if (currentStep < currentQuest.length) { 
+                    loadStep(currentStep); 
+                    updateUI();
+                } else { 
+                    progressBar.style.width = '100%';
+                    endGame(); 
+                }
+            }
+            function updateUI() {
+                playerDisplay.textContent = playerState.name; 
+                avatarHeaderDisplay.textContent = playerState.avatar;
+                scoreDisplay.textContent = score;
+                const progress = currentQuest.length > 0 ? (currentStep / currentQuest.length) * 100 : 0;
+                progressBar.style.width = `${progress}%`;
+            }
+            function renderSessionRelics(container = badgesContainer) {
+                container.innerHTML = '';
+                if (playerState.completedDifficulties.size === 0) {
+                     container.innerHTML = '<p class="text-xs text-slate-400">Completa un sendero para ganar tu primera reliquia.</p>';
+                } else {
+                    playerState.completedDifficulties.forEach(difficulty => {
+                        const relic = relics[difficulty];
+                        if (relic) {
+                            const badgeEl = document.createElement('div');
+                            badgeEl.className = `badge text-center p-2 rounded-lg`;
+                            badgeEl.innerHTML = `<div class="text-4xl" title="${relic.name}">${relic.icon}</div><div class="text-xs font-semibold mt-1">${relic.name}</div>`;
+                            container.appendChild(badgeEl);
+                        }
+                    });
+                }
+            }
+            function endGame() {
+                const isNewRelic = !playerState.completedDifficulties.has(selectedDifficulty);
+                if (isNewRelic) {
+                    soundManager.playSecret();
+                }
+                playerState.completedDifficulties.add(selectedDifficulty);
+                mainGame.classList.add('hidden');
+                endScreen.classList.remove('hidden');
+                let endHTML = '';
+                if(selectedDifficulty === 'avanzado'){
+                    endHTML = `
+                        <div class="text-6xl mb-4">🏆</div>
+                        <h1 class="zelda-font text-3xl sm:text-4xl font-bold text-[#D4AF37]">¡Guía Maestro!</h1>
+                        <p class="text-lg mt-4">¡Felicidades, <span class="font-bold">${playerState.name}</span>! Has superado la prueba final y demostrado tu dominio del rol de Guía Gamificado.</p>
+                        <div class="mt-6 text-2xl font-bold">Cristales Recaudados: <span class="text-[#E2B029]">${score}</span></div>
+                        <p class="mt-2 text-slate-500">¡Tu sabiduría guiará a muchos!</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <button id="view-cert-btn-dynamic" class="zelda-btn mt-8 px-8 py-3">Ver Certificado de Guía</button>
+                            <button id="restart-btn-dynamic" class="zelda-btn mt-8 px-8 py-3 bg-gray-600 border-b-gray-800">Nueva Exploración</button>
+                        </div>
+                    `;
+                } else {
+                     endHTML = `
+                        <div class="text-6xl mb-4">🏅</div>
+                        <h1 class="zelda-font text-3xl sm:text-4xl font-bold text-[#D4AF37]">¡Prueba Superada!</h1>
+                        <p class="text-lg mt-4">¡Bien hecho, <span class="font-bold">${playerState.name}</span>! Has demostrado gran valor y sabiduría.</p>
+                        <div class="mt-6 text-2xl font-bold">Cristales Recaudados: <span class="text-[#E2B029]">${score}</span></div>
+                        <p class="mt-4 text-slate-600 bg-amber-100 p-3 rounded-md border border-amber-300">Has ganado la reliquia de este sendero. La mayor recompensa, el <strong>Certificado de Guía</strong>, espera al final del <strong>Modo Avanzado</strong>.</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <button id="restart-btn-dynamic" class="zelda-btn mt-8 px-8 py-3 bg-gray-600 border-b-gray-800">Nueva Exploración</button>
+                        </div>
+                    `;
+                }
+                endScreenContent.innerHTML = endHTML;
+                const restartBtn = document.getElementById('restart-btn-dynamic');
+                if(restartBtn) restartBtn.addEventListener('click', () => { soundManager.playClick(); restartGame(); });
+                const viewCertBtn = document.getElementById('view-cert-btn-dynamic');
+                if(viewCertBtn) viewCertBtn.addEventListener('click', () => { soundManager.playClick(); showCertificate(); });
+            }
+            function showCertificate() {
+                endScreen.classList.add('hidden');
+                certificateScreen.classList.remove('hidden');
+                certPlayerName.textContent = playerState.name;
+                certAvatarDisplay.textContent = playerState.avatar;
+                certScore.textContent = score;
+                certFolio.textContent = `GUIDE-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+                renderSessionRelics(certBadges);
+            }
+            function restartGame() {
+                certificateScreen.classList.add('hidden');
+                endScreen.classList.add('hidden');
+                startScreen.classList.remove('hidden');
+                nameInputSection.classList.add('hidden');
+                avatarSelectionSection.classList.add('hidden');
+                difficultySelectionSection.classList.remove('hidden');
+            }
+            nextToAvatarBtn.addEventListener('click', () => {
+                soundManager.playClick();
+                playerState.name = playerNameInput.value.trim() || 'Guía';
+                nameInputSection.classList.add('hidden');
+                avatarSelectionSection.classList.remove('hidden');
+            });
+            nextToDifficultyBtn.addEventListener('click', () => {
+                soundManager.playClick();
+                avatarSelectionSection.classList.add('hidden');
+                difficultySelectionSection.classList.remove('hidden');
+            });
+            difficultyButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const difficulty = e.currentTarget.dataset.difficulty;
+                    setupGame(difficulty);
+                });
+            });
+            nextBtn.addEventListener('click', nextStep);
+            restartFromCertBtn.addEventListener('click', () => { soundManager.playClick(); restartGame(); });
+            downloadBtn.addEventListener('click', () => {
+                soundManager.playClick();
+                const certWrapper = document.getElementById('certificate-wrapper');
+                const explanationContainer = document.getElementById('explanation-container');
+                downloadBtn.textContent = "Generando...";
+                downloadBtn.disabled = true;
+                // Prepare a clone for high-quality capture, independent of screen size
+                const certClone = certWrapper.cloneNode(true);
+                const explanationClone = explanationContainer.cloneNode(true);
+                // Create an off-screen container for rendering the clones
+                const printContainer = document.createElement('div');
+                printContainer.style.position = 'absolute';
+                printContainer.style.left = '-9999px';
+                printContainer.style.top = '0';
+                printContainer.style.width = '800px'; // Fixed width for consistent rendering
+                printContainer.appendChild(certClone);
+                printContainer.appendChild(explanationClone);
+                document.body.appendChild(printContainer);
+                // Remove animations from the clones
+                certClone.querySelector('#certificate').classList.remove('animate__animated', 'animate__zoomIn');
+                const options = { 
+                    backgroundColor: "#1a1a2e", // Match the dark background
+                    scale: 2, // Higher scale for better quality
+                    useCORS: true,
+                };
+                html2canvas(certClone, options).then(canvas1 => {
+                    html2canvas(explanationClone, options).then(canvas2 => {
+                        const imgData1 = canvas1.toDataURL('image/png');
+                        const imgData2 = canvas2.toDataURL('image/png');
+                        const pdf = new jspdf.jsPDF({
+                            orientation: 'portrait',
+                            unit: 'pt',
+                            format: 'letter'
+                        });
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
+                        // --- Page 1: Certificate ---
+                        const canvas1AR = canvas1.width / canvas1.height;
+                        let img1Width = pdfWidth - 40; // with margin
+                        let img1Height = img1Width / canvas1AR;
+                        if (img1Height > pdfHeight - 40) {
+                            img1Height = pdfHeight - 40;
+                            img1Width = img1Height * canvas1AR;
+                        }
+                        const x1 = (pdfWidth - img1Width) / 2;
+                        const y1 = (pdfHeight - img1Height) / 2;
+                        pdf.addImage(imgData1, 'PNG', x1, y1, img1Width, img1Height);
+                        // --- Page 2: Explanation ---
+                        pdf.addPage('letter', 'portrait');
+                        const canvas2AR = canvas2.width / canvas2.height;
+                        let img2Width = pdfWidth - 40; // with margin
+                        let img2Height = img2Width / canvas2AR;
+                         if (img2Height > pdfHeight - 40) {
+                            img2Height = pdfHeight - 40;
+                            img2Width = img2Height * canvas2AR;
+                        }
+                        const x2 = (pdfWidth - img2Width) / 2;
+                        const y2 = (pdfHeight - img2Height) / 2;
+                        pdf.addImage(imgData2, 'PNG', x2, y2, img2Width, img2Height);
+                        pdf.save(`Certificado_Guia_${playerState.name.replace(/\s/g, '_')}.pdf`);
+                        // Cleanup
+                        document.body.removeChild(printContainer);
+                        downloadBtn.textContent = "Descargar PDF";
+                        downloadBtn.disabled = false;
+                    }).catch(err => {
+                        console.error("Error generating page 2:", err);
+                        alert("Hubo un error al generar la segunda página del PDF.");
+                        document.body.removeChild(printContainer);
+                        downloadBtn.textContent = "Descargar PDF";
+                        downloadBtn.disabled = false;
+                    });
+                }).catch(err => {
+                    console.error("Error generating page 1:", err);
+                    alert("Hubo un error al generar la primera página del PDF.");
+                    document.body.removeChild(printContainer);
+                    downloadBtn.textContent = "Descargar PDF";
+                    downloadBtn.disabled = false;
+                });
+            });
+            init();
+        });
+    </script>
+</body>
+</html>
