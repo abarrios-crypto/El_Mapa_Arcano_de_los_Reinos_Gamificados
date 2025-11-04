@@ -18,7 +18,7 @@
     <style>
         :root {
             --cursor-sword: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 50 50" transform="rotate(45)"><path fill="silver" stroke="black" d="M23 0 L27 0 L27 30 L40 30 L40 35 L27 35 L27 50 L23 50 L23 35 L10 35 L10 30 L23 30 Z"/></svg>'), auto;
-            --cursor-fairy: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><radialGradient id="a"><stop offset="0%25" stop-color="white"/><stop offset="100%25" stop-color="cyan"/></radialGradient></defs><circle cx="16" cy="16" r="12" fill="cyan" fill-opacity="0.3"/><circle cx="16" cy="16" r="8" fill="url(%23a)" stroke="black" stroke-width="1"/></svg>'), auto;
+            --cursor-fairy: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><radialGradient id="a"><stop offset="0%25" stop-color="white"/><stop offset="100%25" stop-color="cyan"/></radialGradient></defs><circle cx="16" cy="16" r="12" fill="cyan" fill-opacity="0.3"/><circle cx="16" cy="16" r="8" fill="url(%23a)" stroke="black" stroke-width="1"/></svg>'), auto;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -177,6 +177,10 @@
                     <div class="w-full progress-bar-bg rounded-full h-5 p-1"><div id="progress-bar" class="progress-bar-fill h-full rounded-full" style="width: 0%;"></div></div>
                 </div>
                 <div class="text-center"><h2 class="text-sm font-semibold text-slate-500">CRISTALES</h2><p id="score" class="text-2xl font-bold text-[#E2B029]">0</p></div>
+                <div class="flex gap-2">
+                    <button id="restart-level-btn" class="zelda-btn px-4 py-1 text-sm">Reiniciar Nivel</button>
+                    <button id="home-btn" class="zelda-btn bg-gray-600 border-b-gray-800 px-4 py-1 text-sm">Inicio</button>
+                </div>
             </header>
             <div id="scenario-container" class="zelda-container p-6">
                 <p id="scenario-category" class="zelda-font text-sm font-bold uppercase text-[#8e44ad] mb-2"></p>
@@ -229,17 +233,17 @@
     <!-- Explanation Page for PDF - Positioned off-screen -->
     <div id="explanation-container" class="absolute left-[-9999px] top-0 w-[800px]">
         <div id="explanation-page" class="zelda-container p-8 text-left text-sm">
-            <h1 class="zelda-font text-3xl font-bold text-[#D4AF37] text-center">Resumen del Mapa Arcano</h1>
-            <p class="text-center text-lg mt-2 mb-6">Reflexiones sobre la experiencia de "El Mapa Arcano de los Reinos Gamificados".</p>
-            <p class="text-justify mb-4">Este viaje fue una transición del rol de "Aprendiz" al de "Guía". Se exploraron herramientas y estrategias específicas para integrar la gamificación en entornos educativos reales.</p>
-            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">1. Modo Básico: Fundamentos de la Guía</h2>
-            <p class="mt-1 text-justify">Este nivel introduce los conceptos esenciales para guiar. Se exploran estrategias como la lectura interactiva y la importancia de la retroalimentación inmediata.</p>
-            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">2. Modo Intermedio: Profundizando en las Técnicas</h2>
-            <p class="mt-1 text-justify">Aquí se abordan metodologías activas como el Aprendizaje Basado en Proyectos y el Aula Invertida, y cómo integrarlas con elementos gamificados para potenciar su impacto.</p>
-            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">3. Modo Avanzado: El Maestro Guía</h2>
-            <p class="mt-1 text-justify">El nivel final desafía al Guía a considerar la motivación intrínseca, la autonomía del estudiante y la creación de un entorno de aprendizaje profundamente inmersivo y gamificado.</p>
+            <h1 class="zelda-font text-3xl font-bold text-[#D4AF37] text-center">Pergamino de Sabiduría del Guía</h1>
+            <p class="text-center text-lg mt-2 mb-6">Desglosando la pedagogía detrás de "El Mapa Arcano".</p>
+            <p class="text-justify mb-4">Esta experiencia fue más que un juego; fue una transición del rol de "Aprendiz" al de "Guía". Se exploraron herramientas y estrategias específicas para integrar la gamificación en entornos educativos reales, centrándose en el empoderamiento del docente como facilitador y guía gamificador.</p>
+            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">1. Fundamentos de la Guía Gamificada</h2>
+            <p class="mt-1 text-justify">El rol del Guía se centra en empoderar al aprendiz. Se exploraron estrategias como la lectura interactiva ("Pergaminos Vivientes") y la importancia de la retroalimentación inmediata ("Susurro del Espíritu") para guiar el proceso de aprendizaje.</p>
+            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">2. Profundizando en las Técnicas</h2>
+            <p class="mt-1 text-justify">Aquí se abordaron metodologías activas como el Aprendizaje Basado en Proyectos ("Misión del Puente") y el Aula Invertida ("Pergamino del Sabio"), y cómo integrarlas con elementos gamificados ("Cristales de Interacción", "Reliquias") para potenciar su impacto y fomentar la autonomía del estudiante.</p>
+            <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">3. El Maestro Guía</h2>
+            <p class="mt-1 text-justify">El nivel final desafía al Guía a considerar la motivación intrínseca, la importancia de la agencia del estudiante ("Cueva Opcional") y la creación de un entorno de aprendizaje profundamente inmersivo y gamificado, donde el docente sea un facilitador del descubrimiento.</p>
             <h2 class="zelda-font text-lg font-semibold text-[#D4AF37] mt-3">4. El Rol del Guía</h2>
-            <p class="mt-1 text-justify">El enfoque central de esta experiencia fue empoderar a los participantes como Guías Gamificadores. Esto implica no solo conocer los elementos, sino saber cómo y cuándo aplicarlos para motivar, guiar y facilitar el aprendizaje de otros.</p>
+            <p class="mt-1 text-justify">El enfoque central de esta experiencia fue empoderar a los participantes como Guías Gamificadores. Esto implica no solo conocer los elementos de la gamificación ("Reliquias", "Cristales"), sino saber cómo y cuándo aplicarlos para motivar, guiar y facilitar el aprendizaje de otros, fomentando un aprendizaje centrado en la persona.</p>
             <div class="footer-text text-center text-xs text-slate-500 mt-6 pt-3 border-t-2 border-dashed border-[#8e44ad]">
                 © 2025 | Adriana A. Barrios Rodríguez | Diplomado en Gamificación en Entornos Digitales para la Docencia Universitaria |  UAS | SAU |  DGES | Todos los derechos reservados.
             </div>
@@ -255,7 +259,7 @@
                     { type: 'matching', category: 'Prueba Final Básica', scenario: 'Conecta las herramientas del Mapa con su función principal.', points: 200, matches: [ { gamified: 'Pergaminos Vivientes', real: 'H5P (Lectura Interactiva)' }, { gamified: 'Visiones del Oráculo', real: 'Video Interactivo con Feedback' }, { gamified: 'Cristales de Interacción', real: 'Sistema de Recompensas' } ] }
                 ],
                 intermedio: [
-                    { category: 'Santuario 2: Visiones del Oráculo', scenario: '¿Qué debe incluir un video en "Visiones del Oráculo" para ser efectivo?', choices: [{ text: 'Pausas interactivas para reflexión.', correct: true }, { text: 'Solo narración sin interrupciones.', correct: false }, { text: Música de fondo muy alta.', correct: false }], feedback_correct: '¡Exacto! La interrupción intencionada mejora la retención. ¡Ganas 175 cristales!', feedback_incorrect: 'Los videos largos sin pausa pueden ser difíciles de seguir.', points: 175 },
+                    { category: 'Santuario 2: Visiones del Oráculo', scenario: '¿Qué debe incluir un video en "Visiones del Oráculo" para ser efectivo?', choices: [{ text: 'Pausas interactivas para reflexión.', correct: true }, { text: 'Solo narración sin interrupciones.', correct: false }, { text: 'Música de fondo muy alta.', correct: false }], feedback_correct: '¡Exacto! La interrupción intencionada mejora la retención. ¡Ganas 175 cristales!', feedback_incorrect: 'Los videos largos sin pausa pueden ser difíciles de seguir.', points: 175 },
                     { category: 'Mapa Arcaico: Simulacros del Destino', scenario: '¿Qué es un "Simulacro del Destino"?', choices: [{ text: 'Un caso interactivo donde las decisiones afectan el desenlace.', correct: true }, { text: 'Un examen final tradicional.', correct: false }, { text: 'Un juego de azar.', correct: false }], feedback_correct: '¡Correcto! Ofrece autonomía y consecuencias, aumentando la inmersión. ¡Ganas 175 cristales!', feedback_incorrect: 'Los simulacros son dinámicos y centrados en la toma de decisiones.', points: 175 },
                     { category: 'Santuario 1: Pergaminos Vivientes', scenario: '¿Cuál es el objetivo de los "sellos" y "gemas" en un Pergamino Viviente?', choices: [{ text: 'Evaluar la comprensión mientras se lee.', correct: true }, { text: 'Hacerlo más largo.', correct: false }, { text: 'Cambiar el color del texto.', correct: false }], feedback_correct: '¡Perfecto! Son herramientas de evaluación formativa. ¡Ganas 175 cristales!', feedback_incorrect: 'La idea es mejorar la comprensión, no solo extender el texto.', points: 175 },
                     { type: 'matching', category: 'Prueba Final Intermedia', scenario: 'Conecta las actividades del Mapa con su metodología base.', points: 250, matches: [ { gamified: 'Simulacros del Destino', real: 'Caso Interactivo (Elije tu Aventura)' }, { gamified: 'Misión del Puente', real: 'Aprendizaje Basado en Proyectos' }, { gamified: 'Pergamino del Sabio', real: 'Aula Invertida' } ] }
@@ -296,7 +300,6 @@
                     console.warn("No se pudo cargar el estado previo del jugador.");
                 }
             }
-
             // --- Game Variables (reset every playthrough) ---
             let currentQuest = [];
             let currentStep = 0;
@@ -308,12 +311,15 @@
             const avatarOptionsContainer = document.getElementById('avatar-options');
             const difficultyButtons = document.querySelectorAll('[data-difficulty]');
             const nextBtn = document.getElementById('next-btn'), downloadBtn = document.getElementById('download-btn'), restartFromCertBtn = document.getElementById('restart-from-cert-btn');
-            const playerNameInput = document.getElementById('player-name'), playerDisplay = document.getElementById('player-display'), certPlayerName = document.getElementById('cert-player-name');
-            const avatarHeaderDisplay = document.getElementById('avatar-header-display'), certAvatarDisplay = document.getElementById('cert-avatar-display');
-            const progressBar = document.getElementById('progress-bar'), scoreDisplay = document.getElementById('score'), certScore = document.getElementById('cert-score');
-            const scenarioCategory = document.getElementById('scenario-category'), scenarioText = document.getElementById('scenario-text'), choicesContainer = document.getElementById('choices-container'), feedbackContainer = document.getElementById('feedback-container'), feedbackText = document.getElementById('feedback-text'), badgesContainer = document.getElementById('badges-container'), certBadges = document.getElementById('cert-badges');
-            const certFolio = document.getElementById('cert-folio');
+            const restartLevelBtn = document.getElementById('restart-level-btn'), homeBtn = document.getElementById('home-btn');
+            // --- Variables moved inside init() ---
+            let playerNameInput, playerDisplay, certPlayerName;
+            let avatarHeaderDisplay, certAvatarDisplay;
+            let progressBar, scoreDisplay, certScore;
+            let scenarioCategory, scenarioText, choicesContainer, feedbackContainer, feedbackText, badgesContainer, certBadges;
+            let certFolio;
             const endScreenContent = document.getElementById('end-screen-content');
+            // --- End of moved variables ---
             const soundManager = {
                 isReady: false,
                 synth: null,
@@ -352,6 +358,24 @@
                 if (avatarOptionsContainer.firstElementChild) {
                     selectAvatar(avatarOptionsContainer.firstElementChild, avatarOptionsContainer.firstElementChild.dataset.avatar);
                 }
+                // --- Variables defined inside init() ---
+                playerNameInput = document.getElementById('player-name');
+                playerDisplay = document.getElementById('player-display');
+                certPlayerName = document.getElementById('cert-player-name');
+                avatarHeaderDisplay = document.getElementById('avatar-header-display');
+                certAvatarDisplay = document.getElementById('cert-avatar-display');
+                progressBar = document.getElementById('progress-bar');
+                scoreDisplay = document.getElementById('score');
+                certScore = document.getElementById('cert-score');
+                scenarioCategory = document.getElementById('scenario-category');
+                scenarioText = document.getElementById('scenario-text');
+                choicesContainer = document.getElementById('choices-container');
+                feedbackContainer = document.getElementById('feedback-container');
+                feedbackText = document.getElementById('feedback-text');
+                badgesContainer = document.getElementById('badges-container');
+                certBadges = document.getElementById('cert-badges');
+                certFolio = document.getElementById('cert-folio');
+                // --- End of defined variables ---
             }
             function selectAvatar(selectedElement, avatarIcon) {
                 soundManager.playClick();
@@ -550,9 +574,20 @@
                 avatarSelectionSection.classList.add('hidden');
                 difficultySelectionSection.classList.remove('hidden');
             }
+            function restartLevel() {
+                soundManager.playClick();
+                if (selectedDifficulty) {
+                    setupGame(selectedDifficulty);
+                }
+            }
+            function goToHome() {
+                soundManager.playClick();
+                restartGame();
+            }
+            // --- Event Listeners ---
             nextToAvatarBtn.addEventListener('click', () => {
                 soundManager.playClick();
-                playerState.name = playerNameInput.value.trim() || 'Guía';
+                playerState.name = playerNameInput.value.trim() || 'Guía'; // playerNameInput está definido aquí
                 nameInputSection.classList.add('hidden');
                 avatarSelectionSection.classList.remove('hidden');
             });
@@ -569,32 +604,39 @@
             });
             nextBtn.addEventListener('click', nextStep);
             restartFromCertBtn.addEventListener('click', () => { soundManager.playClick(); restartGame(); });
+            restartLevelBtn.addEventListener('click', restartLevel);
+            homeBtn.addEventListener('click', goToHome);
             downloadBtn.addEventListener('click', () => {
                 soundManager.playClick();
                 const certWrapper = document.getElementById('certificate-wrapper');
                 const explanationContainer = document.getElementById('explanation-container');
                 downloadBtn.textContent = "Generando...";
                 downloadBtn.disabled = true;
+                // Prepare a clone for high-quality capture, independent of screen size
                 const certClone = certWrapper.cloneNode(true);
                 const explanationClone = explanationContainer.cloneNode(true);
+                // Create an off-screen container for rendering the clones
                 const printContainer = document.createElement('div');
                 printContainer.style.position = 'absolute';
                 printContainer.style.left = '-9999px';
                 printContainer.style.top = '0';
-                printContainer.style.width = '800px';
+                printContainer.style.width = '800px'; // Fixed width for consistent rendering
                 printContainer.appendChild(certClone);
                 printContainer.appendChild(explanationClone);
                 document.body.appendChild(printContainer);
+                // Remove animations from the clones
                 certClone.querySelector('#certificate').classList.remove('animate__animated', 'animate__zoomIn');
                 const options = { 
                     backgroundColor: "#1a1a2e",
-                    scale: 2,
+                    scale: 2, // Higher scale for better quality
                     useCORS: true,
                 };
                 html2canvas(certClone, options).then(canvas1 => {
                     html2canvas(explanationClone, options).then(canvas2 => {
                         const imgData1 = canvas1.toDataURL('image/png');
                         const imgData2 = canvas2.toDataURL('image/png');
+                        // --- Creación del PDF ---
+                        // Se usa 'new' para crear una instancia del PDF *dentro* de la promesa final
                         const pdf = new jspdf.jsPDF({
                             orientation: 'portrait',
                             unit: 'pt',
@@ -602,8 +644,9 @@
                         });
                         const pdfWidth = pdf.internal.pageSize.getWidth();
                         const pdfHeight = pdf.internal.pageSize.getHeight();
+                        // --- Página 1: Certificado ---
                         const canvas1AR = canvas1.width / canvas1.height;
-                        let img1Width = pdfWidth - 40;
+                        let img1Width = pdfWidth - 40; // with margin
                         let img1Height = img1Width / canvas1AR;
                         if (img1Height > pdfHeight - 40) {
                             img1Height = pdfHeight - 40;
@@ -612,9 +655,10 @@
                         const x1 = (pdfWidth - img1Width) / 2;
                         const y1 = (pdfHeight - img1Height) / 2;
                         pdf.addImage(imgData1, 'PNG', x1, y1, img1Width, img1Height);
+                        // --- Página 2: Explanation ---
                         pdf.addPage('letter', 'portrait');
                         const canvas2AR = canvas2.width / canvas2.height;
-                        let img2Width = pdfWidth - 40;
+                        let img2Width = pdfWidth - 40; // with margin
                         let img2Height = img2Width / canvas2AR;
                          if (img2Height > pdfHeight - 40) {
                             img2Height = pdfHeight - 40;
@@ -624,6 +668,7 @@
                         const y2 = (pdfHeight - img2Height) / 2;
                         pdf.addImage(imgData2, 'PNG', x2, y2, img2Width, img2Height);
                         pdf.save(`Certificado_Guia_${playerState.name.replace(/\s/g, '_')}.pdf`);
+                        // Cleanup
                         document.body.removeChild(printContainer);
                         downloadBtn.textContent = "Descargar PDF";
                         downloadBtn.disabled = false;
@@ -642,7 +687,7 @@
                     downloadBtn.disabled = false;
                 });
             });
-            init();
+            init(); // Asegura que init se llame después de que se cargue el DOM
         });
     </script>
 </body>
